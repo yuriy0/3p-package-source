@@ -73,23 +73,18 @@ index 00000000..e0dd5ac2
 +2.30.1
 +
 diff --git a/ports/physx/fix-compiler-flag.patch b/ports/physx/fix-compiler-flag.patch
-index cfb253e7..06aeb0c8 100644
+index cfb253e7e..fb183022e 100644
 --- a/ports/physx/fix-compiler-flag.patch
 +++ b/ports/physx/fix-compiler-flag.patch
-@@ -47,12 +47,12 @@ index a1ab3596..dbd20fb0 100644
+@@ -45,7 +45,7 @@ index a1ab3596..dbd20fb0 100644
+ +	SET(PHYSX_CXX_FLAGS "${PHYSX_CXX_FLAGS} /arch:SSE2 ${PHYSX_FP_MODE} ${PHYSX_WARNING_DISABLES}" CACHE INTERNAL "PhysX CXX")
+  ENDIF()
   
- +if(FALSE)
+-+if(FALSE)
+++if(TRUE)
   SET(PHYSX_CXX_FLAGS_DEBUG "/Od ${WINCRT_DEBUG} /RTCu /Zi" CACHE INTERNAL "PhysX Debug CXX Flags")
-++endif()
   # PT: changed /Ox to /O2 because "the /Ox compiler option enables only a subset of the speed optimization options enabled by /O2."
   # See https://docs.microsoft.com/en-us/cpp/build/reference/ox-full-optimization?view=vs-2019
-  SET(PHYSX_CXX_FLAGS_CHECKED "/O2 ${WINCRT_NDEBUG} /Zi" CACHE INTERNAL "PhysX Checked CXX Flags")
-  SET(PHYSX_CXX_FLAGS_PROFILE "/O2 ${WINCRT_NDEBUG} /Zi" CACHE INTERNAL "PhysX Profile CXX Flags")
-  SET(PHYSX_CXX_FLAGS_RELEASE "/O2 ${WINCRT_NDEBUG} /Zi" CACHE INTERNAL "PhysX Release CXX Flags")
--+endif()
-  
-  # cache lib type defs
-  IF(PX_GENERATE_STATIC_LIBRARIES)	
 diff --git a/ports/physx/portfile.cmake b/ports/physx/portfile.cmake
 index 3b905cc0..42bd05c2 100644
 --- a/ports/physx/portfile.cmake
@@ -122,14 +117,15 @@ index 3b905cc0..42bd05c2 100644
 +set(OPTIONS_PROFILE
 +    "-DPX_OUTPUT_BIN_DIR=${CURRENT_PACKAGES_DIR}/build_output/profile"
 +    "-DPX_OUTPUT_LIB_DIR=${CURRENT_PACKAGES_DIR}/build_output/profile"
-+    "-DNV_USE_DEBUG_WINCRT=ON"
++    "-DNV_USE_DEBUG_WINCRT=OFF"
  )
  set(OPTIONS_DEBUG
 -    "-DPX_OUTPUT_BIN_DIR=${CURRENT_PACKAGES_DIR}/debug"
 -    "-DPX_OUTPUT_LIB_DIR=${CURRENT_PACKAGES_DIR}/debug"
+-    "-DNV_USE_DEBUG_WINCRT=ON"
 +    "-DPX_OUTPUT_BIN_DIR=${CURRENT_PACKAGES_DIR}/build_output/debug"
 +    "-DPX_OUTPUT_LIB_DIR=${CURRENT_PACKAGES_DIR}/build_output/debug"
-     "-DNV_USE_DEBUG_WINCRT=ON"
++    "-DNV_USE_DEBUG_WINCRT=OFF"
  )
  
 @@ -50,6 +56,11 @@ elseif(VCPKG_TARGET_IS_LINUX OR VCPKG_TARGET_IS_FREEBSD)

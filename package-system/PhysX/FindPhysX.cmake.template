@@ -22,8 +22,8 @@ set($${MY_NAME}_INCLUDE_DIR
 
 set($${MY_NAME}_COMPILE_DEFINITIONS $$<$$<BOOL:$${LY_MONOLITHIC_GAME}>:PX_PHYSX_STATIC_LIB>)
 
-set(PATH_TO_STATIC_LIBS $${_PACKAGE_DIR}/$$<IF:$$<CONFIG:debug>,debug/,$$<$$<CONFIG:profile>:profile/>>lib)
-set(PATH_TO_SHARED_LIBS $${_PACKAGE_DIR}/$$<IF:$$<CONFIG:debug>,debug/,$$<$$<CONFIG:profile>:profile/>>bin)
+set(PATH_TO_STATIC_LIBS $${_PACKAGE_DIR}/$$<IF:$$<CONFIG:debug>,debug/,$$<$$<CONFIG:profile>:debug/>>lib)
+set(PATH_TO_SHARED_LIBS $${_PACKAGE_DIR}/$$<IF:$$<CONFIG:debug>,debug/,$$<$$<CONFIG:profile>:debug/>>bin)
 if(DEFINED CMAKE_IMPORT_LIBRARY_SUFFIX)
     set(PATH_TO_IMPORT_LIBS $${PATH_TO_STATIC_LIBS})
     set(import_lib_prefix $${CMAKE_IMPORT_LIBRARY_PREFIX})
